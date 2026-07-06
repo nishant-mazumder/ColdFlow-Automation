@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Strategy {
+  id            String     @id @default(uuid())
+  name          String
+  googleSheetId  String
+  status         String        @default("PAUSED") // RUNNING, PAUSED
+  emailAccountId String?
+  emailAccount   EmailAccount? @relation(fields: [emailAccountId], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt     DateTime   @updatedAt
+  leads          Lead[]
+  templates      Template[]
+}
+
+model EmailAccount {
+  id                 String     @id @default(uuid())
+  emailAddress       String     @unique
+  googleRefreshToken String
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  strategies         Strategy[]
+}
+
+model Template {
+  id         String     @id @default(uuid())
+  strategyId String
+  strategy   Strategy   @relation(fields: [strategyId], references: [id])
+  stage      String     // INITIAL, FOLLOW_UP_1, FOLLOW_UP_2, FOLLOW_UP_3
+  subject    String
+  body       String     // HTML content
+  status     String     @default("ACTIVE") // For A/B Testing: ACTIVE, PAUSED
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  EmailLog   EmailLog[]
+}
+
+model Lead {
+  id               String     @id @default(uuid())
+  strategyId       String
+  strategy         Strategy   @relation(fields: [strategyId], references: [id])
+  email            String
+  businessName     String
+  status           String     @default("PENDING") // PENDING, IN_PROGRESS, COMPLETED, REPLIED, BOUNCED
+  currentStage     String     @default("NONE")    // NONE, INITIAL, FOLLOW_UP_1, FOLLOW_UP_2, FOLLOW_UP_3
+  nextFollowUpDate DateTime?
+  threadId         String?    // Gmail API thread ID
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  EmailLog         EmailLog[]
+
+  @@unique([strategyId, email])
+}
+
+model EmailLog {
+  id         String    @id @default(uuid())
+  leadId     String
+  lead       Lead      @relation(fields: [leadId], references: [id])
+  templateId String
+  template   Template  @relation(fields: [templateId], references: [id])
+  stage      String
+  sentAt     DateTime  @default(now())
+  openedAt   DateTime? // Set when tracking pixel is loaded
+}
+
+model Settings {
+  id                  String   @id @default(uuid())
+  googleRefreshToken  String?
+  dailyQuota          Int      @default(40)
+  minNewEmails        Int      @default(20)
+  updatedAt           DateTime @updatedAt
+}
+
+model QueueStatus {
+  id              String   @id @default(uuid())
+  date            DateTime @unique @default(now())
+  startedAt       DateTime @default(now())
+  expectedEndTime DateTime?
+  emailsTotal     Int
+  emailsSent      Int      @default(0)
+  emailsFailed    Int      @default(0)
+  status          String   @default("RUNNING") // RUNNING, COMPLETED, ERROR, STOPPED
+  breakdown       String   // JSON string of { new: 20, fu1: 8... }
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  title     String
+  message   String
+  type      String   @default("INFO") // SUCCESS, ERROR, WARNING, INFO
+  read      Boolean  @default(false)
+}

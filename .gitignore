@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.local
+.env.*
+*.sqlite
+*.sqlite-journal
+*.db
+*.db-journal
+.DS_Store
+dist/
+build/
+.next/
