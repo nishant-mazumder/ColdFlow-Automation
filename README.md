@@ -181,4 +181,27 @@ Open your browser and navigate to `http://localhost:3000`. Authenticate your Gma
 ---
 
 ## 📸 Screenshots
-*(Insert Screenshots of the Dashboard, Settings, Strategy Creation, and Live Queue here)*
+
+### 1. Homepage & Live Timeline
+![Homepage](screenshots/Homepage.jpg)
+
+### 2. Active Strategies List
+![Active Strategies](screenshots/Active%20Strategies.jpg)
+
+### 3. Queue Calendar
+![Calander](screenshots/Calander.png)
+
+### 4. Settings & Configuration
+![Settings](screenshots/Settings.jpg)
+
+### 5. Strategy Dashboard
+![Strategy Dashboard](screenshots/Strategy%20Dashboard.jpg)
+
+### 6. Email Template Editor
+![Email Template](screenshots/Email%20Template.png)
+
+### 7. Next Day's Queue Preview
+![Next Day's Queue](screenshots/Next%20Day's%20Queue.png)
+
+### 8. Dynamic Lead Database
+![Lead Database](screenshots/Lead%20Database.jpg)
