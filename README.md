@@ -38,22 +38,22 @@ You simply connect a Google Sheet of leads, define your email templates, and the
 ```mermaid
 graph TD
     subgraph CRM
-        GS[Google Sheets API]
+        GS["Google Sheets API"]
     end
 
     subgraph ColdFlow Agents
-        DH((🧠 Data Harvester Agent))
-        OA((⚖️ Orchestrator Agent))
-        SA((🛡️ Sentinel Agent))
-        DE((📨 Delivery Engine Agent))
+        DH(("🧠 Data Harvester Agent"))
+        OA(("⚖️ Orchestrator Agent"))
+        SA(("🛡️ Sentinel Agent"))
+        DE(("📨 Delivery Engine Agent"))
     end
 
     subgraph Data Layer
-        DB[(PostgreSQL Database)]
+        DB[("PostgreSQL Database")]
     end
 
     subgraph External APIs
-        GMAIL[Google Gmail API]
+        GMAIL["Google Gmail API"]
     end
 
     GS -- Extracts Leads --> DH
