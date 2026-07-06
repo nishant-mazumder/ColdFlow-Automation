@@ -1,4 +1,4 @@
-# 🚀 ColdFlow – Autonomous Multi-Agent Cold Email Engine
+# ColdFlow – Autonomous Multi-Agent Cold Email Engine
 
 <div align="center">
   <h3>Set it and forget it. A fully autonomous cold email engine powered by specialized AI Agents.</h3>
