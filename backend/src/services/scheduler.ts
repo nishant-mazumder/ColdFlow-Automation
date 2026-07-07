@@ -82,7 +82,8 @@ export async function processQueue() {
       else if (lead.currentStage === 'FOLLOW_UP_2') targetStage = 'FOLLOW_UP_3';
 
       const templates = await prisma.template.findMany({
-        where: { strategyId: lead.strategyId, stage: targetStage, status: 'ACTIVE' }
+        where: { strategyId: lead.strategyId, stage: targetStage, status: 'ACTIVE' },
+        orderBy: { createdAt: 'asc' }
       });
 
       if (templates.length === 0) {
